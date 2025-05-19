@@ -19,7 +19,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
     final enteredTitle = _titleController.text.trim();
     final enteredAmount = double.tryParse(_amountController.text.trim());
 
-    if (enteredTitle.isEmpty || enteredAmount == null || enteredAmount <= 0 || _selectedDate == null) {
+    if (enteredTitle.isEmpty ||
+        enteredAmount == null ||
+        enteredAmount <= 0 ||
+        _selectedDate == null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please complete all fields')),
       );
@@ -53,7 +56,8 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
           padding: const EdgeInsets.all(16),
           child: Card(
             elevation: 5,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -78,7 +82,6 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                           _selectedDate == null
                               ? 'No date chosen!'
                               : 'Picked date: ${DateFormat.yMMMd().format(_selectedDate!)}',
-                          style: TextStyle(color: Colors.grey[700]),
                         ),
                       ),
                       TextButton(
@@ -90,15 +93,11 @@ class _AddTransactionScreenState extends State<AddTransactionScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  SizedBox(height: 16),
                   ElevatedButton.icon(
                     onPressed: _submitTransaction,
                     icon: Icon(Icons.check),
                     label: Text('Add Transaction'),
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    ),
                   ),
                 ],
               ),

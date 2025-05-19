@@ -31,6 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _addNewTransaction(String title, double amount, DateTime date) {
     final newTx = {
+      'id': DateTime.now().toString(), // Unique ID
       'title': title,
       'amount': amount,
       'date': date,
@@ -41,10 +42,18 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _transactions.removeWhere((tx) => tx['id'] == id);
+    });
+  }
+
   void _openAddTransactionScreen(BuildContext ctx) {
     Navigator.of(ctx).push(
       MaterialPageRoute(
-        builder: (_) => AddTransactionScreen(onAddTransaction: _addNewTransaction),
+        builder: (_) => AddTransactionScreen(
+          onAddTransaction: _addNewTransaction,
+        ),
       ),
     );
   }
@@ -67,7 +76,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 final tx = _transactions[index];
                 return Card(
                   elevation: 3,
-                  margin: EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+                  margin:
+                  EdgeInsets.symmetric(vertical: 6, horizontal: 12),
                   child: ListTile(
                     leading: CircleAvatar(
                       radius: 30,
@@ -82,8 +92,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    title: Text(tx['title'], style: TextStyle(fontWeight: FontWeight.bold)),
-                    subtitle: Text(DateFormat.yMMMd().format(tx['date'])),
+                    title: Text(
+                      tx['title'],
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle:
+                    Text(DateFormat.yMMMd().format(tx['date'])),
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete),
+                      color: Colors.redAccent,
+                      onPressed: () => _deleteTransaction(tx['id']),
+                    ),
                   ),
                 );
               },
